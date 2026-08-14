@@ -18,7 +18,15 @@
 ```
 sudo apt install iptables vim -y
 sudo iptables -F
-sudo update-alternatives --set iptables /usr/sbin/iptables-legacy      sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+```
+- Delete the swap file and turn it off for good measure. Kubernetes does not play nice with swap file enabled.
+```
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo update-rc.d dphys-swapfile remove      
+sudo swapoff -a
 ```
 - Reboot the Pi.
 
@@ -27,6 +35,8 @@ sudo update-alternatives --set iptables /usr/sbin/iptables-legacy      sudo upda
 - SSH into the node
   
 - Switch user to root again with `sudo su -`
+  
+- Check the swap now shows 0B in the total field using `free -h`
 
 - Run ```curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -s``` to install Kubernetes
 
