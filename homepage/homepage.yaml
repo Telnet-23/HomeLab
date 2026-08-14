@@ -155,7 +155,7 @@ spec:
   type: NodePort
   ports:
     - port: 3000
-      targetPort: http
+      targetPort: 3000
       protocol: TCP
       name: http
       nodePort: 30122
