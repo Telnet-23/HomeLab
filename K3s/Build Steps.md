@@ -45,4 +45,5 @@ sudo swapoff -a
 # Adding Nodes
 - Do everything form the 'Build Process - All Nodes' section on all the Pi(s).
 - SSH into the other Pi(s) and run `sudo su -` to switch to root user
+- Check the swap now shows 0B in the total field using `free -h`
 - Run ```curl -sfL https://get.k3s.io | K3S_TOKEN="YOUR_TOKEN" K3S_URL="https://[your master ip]:6443" K3S_NODE_NAME="servername" sh -```
