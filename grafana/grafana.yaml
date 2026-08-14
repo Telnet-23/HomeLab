@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana-deployment-xfusion
+  name: grafana-deployment
   labels:
     app: grafana
 spec:
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: grafana-service-xfusion
+  name: grafana-service
 spec:
   type: NodePort
   selector:
