@@ -1,4 +1,4 @@
 [servers]
-svr1 ansible_host=172.16.238.10 ansible_user=terry
-svr2 ansible_host=172.16.238.11 ansible_user=terry
-svr3 ansible_host=172.16.238.12 ansible_user=terry
+node1 ansible_host=192.168.0.240 ansible_user=terry
+node2 ansible_host=192.168.0.241 ansible_user=terry
+node3 ansible_host=192.168.0.242 ansible_user=terry
