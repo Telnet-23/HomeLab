@@ -11,6 +11,7 @@
 - To create a user to ssh in with, run `vi userconfig.txt` and create a user with username:passwordhash. The below will create a 'pi' user with the password 'raspberry': 
 ```pi:$6$c70VpvPsVNCG0YR5$l5vWWLsLko9Kj65gcQ8qvMkuOoRkEagI90qi3F/Y7rm8eNYZHW8CY6BOIKwMH7a3YYzZYL90zf304cAHLFaZE0```
 
+- Run ```touch ssh``` at the root level to enable ssh on the Pi.
 - Put the MicroSD back into the Pi and power it on (connect the ethernet port and ping it)
 - SSH to the Pi with `ssh pi@ip` with the default password `raspberry`
 - Switch user to root with ```sudo su -```
@@ -47,3 +48,15 @@ sudo swapoff -a
 - SSH into the other Pi(s) and run `sudo su -` to switch to root user
 - Check the swap now shows 0B in the total field using `free -h`
 - Run ```curl -sfL https://get.k3s.io | K3S_TOKEN="YOUR_TOKEN" K3S_URL="https://[your master ip]:6443" K3S_NODE_NAME="servername" sh -```
+
+# Troubleshooting
+- If you run into an issue where the the node joins but the k3s-agent service cannot start, you'll see in journal that the issue is related to iptables. The controller will also show the node as 'NOT RUNNING'. This seems to be due to recent changes in PiOS The fix is to switch it to use nftables. You should probably do this with all nodes 
+
+```
+sudo update-alternatives --set iptables /usr/sbin/iptables-nft
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-nft
+sudo depmod -a
+sudo modprobe nf_tables
+```
+
+- Once that's done, run ```systemctl start k3s-agent``` on the worker node then run ```kubectl get nodes``` on the controller to confirm its up and 'RUNNING'.
